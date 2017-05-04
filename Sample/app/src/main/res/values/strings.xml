@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Sample</string>
+
+    <string-array name="spinner">
+        <item>０p</item>
+        <item>１p</item>
+        <item>３p</item>
+        <item>４p</item>
+        <item>５p</item>
+        <item>６p</item>
+        <item>７p</item>
+        <item>８p</item>
+        <item>９p</item>
+        <item>10p</item>
+
+    </string-array>
+
+</resources>
