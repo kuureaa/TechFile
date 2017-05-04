@@ -1,6 +1,7 @@
 package com.lifeistech.android.sample;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,8 +19,6 @@ import java.util.LinkedList;
 import de.timroes.android.listview.EnhancedListView;
 
 public class MainActivity extends AppCompatActivity {
-
-
 
     // リストビュー
     private EnhancedListView mListView;
@@ -95,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter.add(msg + edit.getText().toString() + "\n\n" + "アンガーポイント：" + selected + "\n");
         edit.getEditableText().clear();
+    }
+
+    public void info(View v) {
+        Intent intent = new Intent(this, Main2Activity.class);
+        startActivity(intent);
     }
 
 }
