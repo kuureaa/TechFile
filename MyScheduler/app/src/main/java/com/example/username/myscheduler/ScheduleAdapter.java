@@ -48,7 +48,7 @@ public class ScheduleAdapter extends RealmBaseAdapter<Schedule> {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         String formatDate = sdf.format(schedule.getDate());
         viewHolder.title.setText(schedule.getTitle()+ "\n\n" + formatDate + "\n\n");
-        viewHolder.ap.setText("アンガーポイント：" + schedule.getDetail() + "\n\n");
+        viewHolder.ap.setText("アンガーポイント：" + schedule.getDetail() + "p" + "\n\n");
         return convertView;
     }
 }

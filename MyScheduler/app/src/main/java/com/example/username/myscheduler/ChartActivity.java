@@ -3,6 +3,7 @@ package com.example.username.myscheduler;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -13,6 +14,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -38,7 +40,7 @@ public class ChartActivity extends AppCompatActivity {
 
     private void createBarChart() {
         BarChart barChart = (BarChart) findViewById(R.id.bar_chart);
-        barChart.setDescription("BarChart 説明");
+        barChart.setDescription("アンガーグラフ");
 
         barChart.getAxisRight().setEnabled(false);
         barChart.getAxisLeft().setEnabled(true);
@@ -78,32 +80,37 @@ public class ChartActivity extends AppCompatActivity {
 
         // X軸
        final ArrayList<String> xValues = new ArrayList<>();
-       /* xValues.add(schdule.getDitail());*/
+
 
         //追記
-        long scheduleId = getIntent().getLongExtra("schedule_id", -1);
-       final RealmResults<Schedule> results = mRealm.where(Schedule.class)
-                .equalTo("id", scheduleId).findAll();
+
+       final RealmResults<Schedule> results = mRealm.where(Schedule.class).findAll();
+        final ArrayList<BarEntry> valuesA = new ArrayList<>();
+
+
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Schedule schedule = results.first();
-                schedule.getDetail();
-                xValues.add(schedule.getDetail());
+
+                mRealm.where(Schedule.class).findAll();
+
+                int i = 0;
+
+                for(Schedule s1 : results) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                    String formatDate = sdf.format(s1.getDate());
+
+
+                    xValues.add(formatDate);
+                    valuesA.add(new BarEntry(Integer.parseInt(s1.getDetail()),i));
+                    i++;
+                }
+
             }
         });
 
-        /*
-        // X軸
-        ArrayList<String> xValues = new ArrayList<>();
-        xValues.add(schdule.getDitail());
-        */
 
-        // valueA
-        ArrayList<BarEntry> valuesA = new ArrayList<>();
-        valuesA.add(new BarEntry(100, 0));
-
-        BarDataSet valuesADataSet = new BarDataSet(valuesA, "A");
+        BarDataSet valuesADataSet = new BarDataSet(valuesA, "アンガーポイント");
         valuesADataSet.setColor(ColorTemplate.COLORFUL_COLORS[3]);
 
         barDataSets.add(valuesADataSet);

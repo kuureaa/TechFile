@@ -8,16 +8,17 @@
     <string name="delete_text">削除</string>
 
     <string-array name="spinner">
-        <item>０p</item>
-        <item>１p</item>
-        <item>３p</item>
-        <item>４p</item>
-        <item>５p</item>
-        <item>６p</item>
-        <item>７p</item>
-        <item>８p</item>
-        <item>９p</item>
-        <item>10p</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
 
     </string-array>
 
