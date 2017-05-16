@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -41,6 +42,7 @@ public class Count6Activity extends AppCompatActivity {
     ImageView mImageView;
     AlertDialog.Builder mAlertBuilder;
     int width, height;
+    InputStream in;
 
 
     public class MyCountDownTimer extends CountDownTimer {
@@ -91,6 +93,17 @@ public class Count6Activity extends AppCompatActivity {
             }
         });
 
+
+        try {
+            in = openFileInput("filename01.jpg");
+            mBitmap = BitmapFactory.decodeStream(in);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mImageView.setImageBitmap(mBitmap);
+
     }
 
     public void back(View v) {
@@ -106,8 +119,6 @@ public class Count6Activity extends AppCompatActivity {
             height = mImageView.getHeight();
 
             mBitmap = mBitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-            mImageView.setImageBitmap(mBitmap);
         }
     }
 
@@ -136,11 +147,24 @@ public class Count6Activity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
+
         try {
             mBitmap=loadImage(uri);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try{
+        this.deleteFile("filename01.png");
+        //ローカルファイルへ保存
+            final FileOutputStream out = openFileOutput("filename01.jpg",Context.MODE_WORLD_READABLE);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG,100,out);
+            out.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
         mImageView.setImageBitmap(mBitmap);
     }
 
