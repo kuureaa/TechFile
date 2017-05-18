@@ -19,8 +19,8 @@ import io.realm.RealmBaseAdapter;
 public class ScheduleAdapter extends RealmBaseAdapter<Schedule> {
 
     private static class ViewHolder {
-        TextView title;
         TextView ap;
+        TextView title;
     }
 
     public ScheduleAdapter(@Nullable
@@ -47,8 +47,8 @@ public class ScheduleAdapter extends RealmBaseAdapter<Schedule> {
         Schedule schedule = adapterData.get(position);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         String formatDate = sdf.format(schedule.getDate());
-        viewHolder.title.setText(schedule.getTitle()+ "\n\n" + formatDate + "\n\n");
-        viewHolder.ap.setText("アンガーポイント：" + schedule.getDetail() + "p" + "\n\n");
+        viewHolder.ap.setText("\n" + schedule.getTitle()+ "\n\n" + "アンガーポイント：" + schedule.getDetail() + "p" + "\n\n" + formatDate);
+       // viewHolder.ap.setText("アンガーポイント：" + schedule.getDetail() + "p" + "\n\n");
         return convertView;
     }
 }

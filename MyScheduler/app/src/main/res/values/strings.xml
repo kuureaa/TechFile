@@ -24,4 +24,7 @@
 
     <string name="menu_open">写真を追加</string>
 
+    <string name="menu_new">写真を削除</string>
+
+
 </resources>

@@ -35,12 +35,14 @@ import java.io.InputStream;
 
 public class Count6Activity extends AppCompatActivity {
 
+    Canvas mCanvas;
     TextView mTimerText;
     MyCountDownTimer mTimer;
     FloatingActionButton mFab;
     Bitmap mBitmap;
     ImageView mImageView;
     AlertDialog.Builder mAlertBuilder;
+    AlertDialog.Builder mAlertBuilder1;
     int width, height;
     InputStream in;
 
@@ -62,7 +64,16 @@ public class Count6Activity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
+            mAlertBuilder1.setTitle("よく頑張りました！！");
+            mAlertBuilder1.setNegativeButton("閉じる",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            mAlertBuilder1.show();
             mTimerText.setText("6");
+            mFab.setImageResource(R.drawable.ic_play_arrow_black_24dp);
         }
     }
 
@@ -75,35 +86,81 @@ public class Count6Activity extends AppCompatActivity {
 
         mTimerText = (TextView) findViewById(R.id.timer_text);
         mTimerText.setText("6");
-        mTimer = new MyCountDownTimer(6 * 1000, 100);
+        mTimer = new MyCountDownTimer(7 * 1000, 100);
+
+        mAlertBuilder = new AlertDialog.Builder(this);
+        mAlertBuilder1 = new AlertDialog.Builder(this);
+
 
         mFab = (FloatingActionButton) findViewById(R.id.play_stop);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTimer.isRunning) {
-                    mTimer.isRunning = false;
-                    mTimer.cancel();
-                    mFab.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                } else {
-                    mTimer.isRunning = true;
-                    mTimer.start();
-                    mFab.setImageResource(R.drawable.ic_stop_black_24dp);
-                }
+
+
+                mAlertBuilder.setTitle("６秒間だけ我慢して！！");
+                mAlertBuilder.setNegativeButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (mTimer.isRunning) {
+                                    mTimer.isRunning = false;
+                                    mTimer.cancel();
+                                    mFab.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                                } else {
+                                    mTimer.isRunning = true;
+                                    mTimer.start();
+                                    mFab.setImageResource(R.drawable.ic_stop_black_24dp);
+                                }
+                                try {
+                                    in = openFileInput("filename01.jpg");
+                                    mBitmap = BitmapFactory.decodeStream(in);
+                                    mImageView.setImageBitmap(mBitmap);
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                mAlertBuilder.setPositiveButton("無理",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                mAlertBuilder.show();
+
+//                if (mTimer.isRunning) {
+//                    mTimer.isRunning = false;
+//                    mTimer.cancel();
+//                    mFab.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+//                } else {
+//                    mTimer.isRunning = true;
+//                    mTimer.start();
+//                    mFab.setImageResource(R.drawable.ic_stop_black_24dp);
+//                }
+//                try {
+//                    in = openFileInput("filename01.jpg");
+//                    mBitmap = BitmapFactory.decodeStream(in);
+//                    mImageView.setImageBitmap(mBitmap);
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 
 
-        try {
-            in = openFileInput("filename01.jpg");
-            mBitmap = BitmapFactory.decodeStream(in);
+//        try {
+//            in = openFileInput("filename01.jpg");
+//            mBitmap = BitmapFactory.decodeStream(in);
+//            mImageView.setImageBitmap(mBitmap);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         mImageView.setImageBitmap(mBitmap);
-
     }
 
     public void back(View v) {
@@ -119,6 +176,7 @@ public class Count6Activity extends AppCompatActivity {
             height = mImageView.getHeight();
 
             mBitmap = mBitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
         }
     }
 
@@ -140,29 +198,57 @@ public class Count6Activity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_PICK);
                 startActivityForResult(intent, 0);
                 break;
+
+            case R.id.menu_new:
+                try {
+                in = openFileInput("filename01.jpg");
+                mBitmap = BitmapFactory.decodeStream(in);
+                mImageView.setImageBitmap(mBitmap);
+
+                } catch (IOException e) {
+                e.printStackTrace();
+                }
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
 
+
         try {
             mBitmap=loadImage(uri);
+            //ローカルファイルへ保存
+            final FileOutputStream out = openFileOutput("filename01.jpg",Context.MODE_PRIVATE);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG,100,out);
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try{
-        this.deleteFile("filename01.png");
-        //ローカルファイルへ保存
-            final FileOutputStream out = openFileOutput("filename01.jpg",Context.MODE_WORLD_READABLE);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG,100,out);
-            out.close();
-        }catch(IOException e){
+
+        try {
+            in = openFileInput("filename01.jpg");
+            mBitmap = BitmapFactory.decodeStream(in);
+            mImageView.setImageBitmap(mBitmap);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+//        try{
+//        //ローカルファイルへ保存
+//            final FileOutputStream out = openFileOutput("filename01.jpg",Context.MODE_PRIVATE);
+//            mBitmap.compress(Bitmap.CompressFormat.JPEG,100,out);
+//            out.close();
+//        }catch(IOException e){
+//            e.printStackTrace();
+//        }
 
 
         mImageView.setImageBitmap(mBitmap);
@@ -200,5 +286,4 @@ public class Count6Activity extends AppCompatActivity {
         bm=offBitmap;
         return bm;
     }
-
 }

@@ -10,5 +10,10 @@
         android:title="@string/menu_open"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/menu_new"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/menu_new"
+        app:showAsAction="always" />
 
 </menu>
