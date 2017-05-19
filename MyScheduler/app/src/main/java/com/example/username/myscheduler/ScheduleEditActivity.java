@@ -1,6 +1,9 @@
 package com.example.username.myscheduler;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -11,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +26,11 @@ public class ScheduleEditActivity extends AppCompatActivity {
 
     private Realm mRealm;
     EditText mTitleEdit;
+    EditText mDetailEdit;
     Button mDelete;
+    AlertDialog.Builder mAlertBuilder;
+    AlertDialog.Builder mAlertBuilder1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +38,11 @@ public class ScheduleEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule_edit);
         mRealm = Realm.getDefaultInstance();
         mTitleEdit = (EditText) findViewById(R.id.titleEdit);
+        mDetailEdit = (EditText) findViewById(R.id.detailEdit);
         mDelete = (Button) findViewById(R.id.delete);
+        mAlertBuilder = new AlertDialog.Builder(this);
+        mAlertBuilder1 = new AlertDialog.Builder(this);
+
 
         long scheduleId = getIntent().getLongExtra("schedule_id", -1);
         if (scheduleId != -1) {
@@ -40,6 +52,7 @@ public class ScheduleEditActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             String date = sdf.format(schedule.getDate());
             mTitleEdit.setText(schedule.getTitle());
+            mDetailEdit.setText(schedule.getDetail());
             mDelete.setVisibility(View.VISIBLE);
         } else {
             mDelete.setVisibility(View.INVISIBLE);
@@ -57,27 +70,57 @@ public class ScheduleEditActivity extends AppCompatActivity {
         final Date date = dateParse;
         long scheduleId = getIntent().getLongExtra("schedule_id", -1);
         if (scheduleId != -1) {
+
             final RealmResults<Schedule> results = mRealm.where(Schedule.class)
                     .equalTo("id", scheduleId).findAll();
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Schedule schedule = results.first();
-                    schedule.setDate(date);
-                    schedule.setTitle(mTitleEdit.getText().toString());
-                    schedule.setDetail(selected);
-                }
-            });
-            Snackbar.make(findViewById(android.R.id.content),
-                    "アップデートしました", Snackbar.LENGTH_LONG)
-                    .setAction("戻る", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            finish();
+//            mRealm.executeTransaction(new Realm.Transaction() {
+//                @Override
+//                public void execute(Realm realm) {
+//                    Schedule schedule = results.first();
+//                    schedule.setDate(date);
+//                    schedule.setTitle(mTitleEdit.getText().toString());
+//                    schedule.setDetail(selected);
+//                }
+//            });
+
+            mAlertBuilder1.setTitle("内容を変更しますか？");
+            mAlertBuilder1.setNegativeButton("はい",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            mRealm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    Schedule schedule = results.first();
+                                    schedule.setDate(date);
+                                    schedule.setTitle(mTitleEdit.getText().toString() + "\n\n\n" + "対策：" + "\n\n" + mDetailEdit.getText().toString() + "\n");
+                                    schedule.setDetail(selected);
+                                }
+                            });
+
+                            startActivity(new Intent(ScheduleEditActivity.this,MainActivity.class));
+
                         }
-                    })
-                    .setActionTextColor(Color.YELLOW)
-                    .show();
+                    });
+
+            mAlertBuilder1.setPositiveButton("いいえ",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            mAlertBuilder1.show();
+            //startActivity(new Intent(ScheduleEditActivity.this,MainActivity.class));
+
+//            Snackbar.make(findViewById(android.R.id.content),
+//                    "アップデートしました", Snackbar.LENGTH_LONG)
+//                    .setAction("戻る", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            finish();
+//                        }
+//                    })
+//                    .setActionTextColor(Color.YELLOW)
+//                    .show();
         } else {
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -88,7 +131,7 @@ public class ScheduleEditActivity extends AppCompatActivity {
                     Schedule schedule
                             = realm.createObject(Schedule.class, new Long(nextId));
                     schedule.setDate(date);
-                    schedule.setTitle(mTitleEdit.getText().toString());
+                    schedule.setTitle(mTitleEdit.getText().toString() + "\n\n\n" + "対策：" + "\n\n" + mDetailEdit.getText().toString() + "\n");
                     schedule.setDetail(selected);
 
                     //追記
@@ -109,15 +152,40 @@ public class ScheduleEditActivity extends AppCompatActivity {
     public void onDeleteTapped(View view) {
         final long scheduleId = getIntent().getLongExtra("schedule_id", -1);
         if (scheduleId != -1) {
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Schedule schedule = realm.where(Schedule.class)
-                            .equalTo("id", scheduleId).findFirst();
-                    schedule.deleteFromRealm();
-                }
-            });
-            Toast.makeText(this, "削除しました", Toast.LENGTH_SHORT).show();
+
+            mAlertBuilder.setTitle("本当に削除しますか？");
+            mAlertBuilder.setNegativeButton("はい",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            mRealm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    Schedule schedule = realm.where(Schedule.class)
+                                            .equalTo("id", scheduleId).findFirst();
+                                    schedule.deleteFromRealm();
+                                }
+                            });
+                            startActivity(new Intent(ScheduleEditActivity.this,MainActivity.class));
+
+                        }
+                    });
+            mAlertBuilder.setPositiveButton("いいえ",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            mAlertBuilder.show();
+
+//            mRealm.executeTransaction(new Realm.Transaction() {
+//                @Override
+//                public void execute(Realm realm) {
+//                    Schedule schedule = realm.where(Schedule.class)
+//                            .equalTo("id", scheduleId).findFirst();
+//                    schedule.deleteFromRealm();
+//                }
+//            });
+//            Toast.makeText(this, "削除しました", Toast.LENGTH_SHORT).show();
         }
     }
 

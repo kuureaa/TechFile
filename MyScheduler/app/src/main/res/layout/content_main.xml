@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="chart"
-            android:text="グラフ" />
+            android:text="アンガーグラフ" />
 
         <Button
             android:id="@+id/button4"
@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="count6s"
-            android:text="６秒" />
+            android:text="カウントバック" />
 
     </LinearLayout>
 

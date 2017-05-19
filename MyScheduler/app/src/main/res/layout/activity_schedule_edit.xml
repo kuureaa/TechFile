@@ -3,15 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="194dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="@string/title_text"
+        android:layout_weight="0.08"
+        android:gravity="center_vertical"
+        android:text="怒りの原因・状況："
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteY="86dp" />
 
@@ -21,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -31,38 +35,95 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:text="Name" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="95dp"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/spinner"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:onClick="onSaveTapped"
-        android:text="@string/save_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_weight="0.08"
+        android:gravity="center_vertical"
+        android:text="対策："
+        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/detailEdit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:onClick="onDeleteTapped"
-        android:text="@string/delete_text"
-        app:backgroundTint="@color/deleteButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:text="Name" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.06"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:text="アンガーポイント："
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:entries="@array/spinner"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.21"
+            android:orientation="horizontal"></LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_weight="0.27"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="73dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="55dp"
+            android:layout_weight="0.13"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:onClick="onSaveTapped"
+            android:text="@string/save_text"
+            android:textColorLink="@color/bootstrap_brand_success"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="73dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="55dp"
+            android:layout_weight="0.12"
+            android:onClick="onDeleteTapped"
+            android:text="@string/delete_text"
+            android:textColorLink="?android:attr/textColorLink"
+            app:backgroundTint="?android:attr/colorMultiSelectHighlight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </LinearLayout>
 
 
 </LinearLayout>

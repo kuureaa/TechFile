@@ -1,6 +1,7 @@
 package com.example.username.myscheduler;
 
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,10 @@ public class ScheduleAdapter extends RealmBaseAdapter<Schedule> {
         Schedule schedule = adapterData.get(position);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         String formatDate = sdf.format(schedule.getDate());
-        viewHolder.ap.setText("\n" + schedule.getTitle()+ "\n\n" + "アンガーポイント：" + schedule.getDetail() + "p" + "\n\n" + formatDate);
+
+        String txtStr = "<font color=#ff0000>アンガーポイント：</font>";
+
+        viewHolder.ap.setText("\n" + "怒りの原因・状況："+ "\n\n" + schedule.getTitle()+ "\n\n" + Html.fromHtml(txtStr) + schedule.getDetail() + "p" + "\n\n" + formatDate);
        // viewHolder.ap.setText("アンガーポイント：" + schedule.getDetail() + "p" + "\n\n");
         return convertView;
     }
