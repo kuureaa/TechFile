@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ff4081</color>
-    <color name="deleteButton">#fff540</color>
+    <color name="colorPrimary">#ff9800</color>
+    <color name="colorPrimaryDark">#f57c00</color>
+    <color name="colorAccent">#ff5252</color>
+    <color name="deleteButton">#eee451</color>
+    <color name="background_material_light">#ffe0b2</color>
+    <color name="botttun">#f0c679</color>
+    <color name="buttoncolor">#c1eb7d</color>
 </resources>

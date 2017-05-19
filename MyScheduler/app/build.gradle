@@ -39,5 +39,8 @@ repositories {
 }
 
 dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.5'
 }

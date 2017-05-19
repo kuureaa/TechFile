@@ -11,7 +11,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="311dp"
-        android:layout_weight="3.13"
+        android:layout_weight="1.46"
         app:srcCompat="@android:color/transparent" />
 
     <LinearLayout
@@ -22,13 +22,12 @@
 
         <TextView
             android:id="@+id/timer_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="267dp"
+            android:backgroundTint="@color/deleteButton"
             android:text="6"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/deleteButton"
             android:textSize="120sp"
             tools:text="6" />
 
@@ -37,29 +36,23 @@
             android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="100dp"
             android:clickable="true"
             android:tint="@android:color/white"
+            app:backgroundTint="@color/deleteButton"
             app:elevation="0dp"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_play_arrow_black_24dp" />
 
     </LinearLayout>
 
-    <!--<Button-->
-        <!--android:id="@+id/button"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:onClick="back"-->
-        <!--android:text="Button" />-->
-
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:backgroundTint="?attr/colorButtonNormal"
         android:onClick="back"
-        android:text="かっこいいボタン"
-        android:textColor="#0094FF" />
+        android:text="戻る" />
+
+
 </LinearLayout>

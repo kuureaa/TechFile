@@ -11,8 +11,8 @@
         android:onClick="back"
         android:text="Button" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/bar_chart"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"

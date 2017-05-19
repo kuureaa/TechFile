@@ -8,10 +8,14 @@ import android.view.View;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
@@ -34,49 +38,50 @@ public class ChartActivity extends AppCompatActivity {
         //追記
         mRealm = Realm.getDefaultInstance();
 
-        createBarChart();
-        createBarChartData();
+        createLineChart();
+        createLineChartData();
     }
 
-    private void createBarChart() {
-        BarChart barChart = (BarChart) findViewById(R.id.bar_chart);
-        barChart.setDescription("アンガーグラフ");
+    private void createLineChart() {
+        LineChart lineChart = (LineChart) findViewById(R.id.line_chart);
+        lineChart.setDescription("アンガーグラフ");
 
-        barChart.getAxisRight().setEnabled(false);
-        barChart.getAxisLeft().setEnabled(true);
-        barChart.setDrawGridBackground(true);
-        barChart.setDrawBarShadow(false);
-        barChart.setEnabled(true);
 
-        barChart.setTouchEnabled(true);
-        barChart.setPinchZoom(true);
-        barChart.setDoubleTapToZoomEnabled(true);
+        lineChart.getAxisRight().setEnabled(false);
+        lineChart.getAxisLeft().setEnabled(true);
+        lineChart.setDrawGridBackground(true);
+        //lineChart.setDrawBarShadow(false);
+        lineChart.setEnabled(true);
 
-        barChart.setHighlightEnabled(true);
-        barChart.setDrawHighlightArrow(true);
-        barChart.setHighlightEnabled(true);
+        lineChart.setTouchEnabled(true);
+        lineChart.setPinchZoom(true);
+        lineChart.setDoubleTapToZoomEnabled(true);
 
-        barChart.setScaleEnabled(true);
+        lineChart.setHighlightEnabled(true);
+        //lineChart.setDrawHighlightArrow(true);
+        lineChart.setHighlightEnabled(true);
 
-        barChart.getLegend().setEnabled(true);
+        lineChart.setScaleEnabled(true);
+
+        lineChart.getLegend().setEnabled(true);
 
         //X軸周り
-        XAxis xAxis = barChart.getXAxis();
+        XAxis xAxis = lineChart.getXAxis();
         xAxis.setDrawLabels(true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(true);
         xAxis.setSpaceBetweenLabels(0);
 
-        barChart.setData(createBarChartData());
+        lineChart.setData(createLineChartData());
 
-        barChart.invalidate();
+        lineChart.invalidate();
         // アニメーション
-        barChart.animateY(2000, Easing.EasingOption.EaseInBack);
+        lineChart.animateY(2000, Easing.EasingOption.EaseInBack);
     }
 
     // BarChartの設定
-    private BarData createBarChartData() {
-        ArrayList<BarDataSet> barDataSets = new ArrayList<>();
+    private LineData createLineChartData() {
+        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
 
         // X軸
        final ArrayList<String> xValues = new ArrayList<>();
@@ -85,7 +90,7 @@ public class ChartActivity extends AppCompatActivity {
         //追記
 
        final RealmResults<Schedule> results = mRealm.where(Schedule.class).findAll();
-        final ArrayList<BarEntry> valuesA = new ArrayList<>();
+        final ArrayList<Entry> valuesA = new ArrayList<>();
 
 
         mRealm.executeTransaction(new Realm.Transaction() {
@@ -97,12 +102,12 @@ public class ChartActivity extends AppCompatActivity {
                 int i = 0;
 
                 for(Schedule s1 : results) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
                     String formatDate = sdf.format(s1.getDate());
 
 
                     xValues.add(formatDate);
-                    valuesA.add(new BarEntry(Integer.parseInt(s1.getDetail()),i));
+                    valuesA.add(new Entry(Integer.parseInt(s1.getDetail()),i));
                     i++;
                 }
 
@@ -110,13 +115,15 @@ public class ChartActivity extends AppCompatActivity {
         });
 
 
-        BarDataSet valuesADataSet = new BarDataSet(valuesA, "アンガーポイント");
-        valuesADataSet.setColor(ColorTemplate.COLORFUL_COLORS[3]);
 
-        barDataSets.add(valuesADataSet);
+        LineDataSet valuesADataSet = new LineDataSet(valuesA, "アンガーポイント");
+        valuesADataSet.setColor(ColorTemplate.COLORFUL_COLORS[0]);
+        valuesADataSet.setLineWidth(10.0f);
 
-        BarData barData = new BarData(xValues, barDataSets);
-        return barData;
+        lineDataSets.add(valuesADataSet);
+
+        LineData lineData = new LineData(xValues, lineDataSets);
+        return lineData;
     }
 
     public void back(View v){
