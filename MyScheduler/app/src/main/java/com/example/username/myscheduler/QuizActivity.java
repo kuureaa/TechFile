@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity {
+public class QuizActivity extends ActionBarActivity {
     // 問題を管理するリスト
     private ArrayList<Question> question_list = new ArrayList<>();
     // 描画更新用Handler
@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_quiz);
         handler = new Handler();
 
         // TODO [02]ここから
@@ -98,19 +98,13 @@ public class MainActivity extends ActionBarActivity {
         if (current >= question_num) {
             current = -1;
             // 次の問題がもう無い時
-            // 結果画面に移動
-            Intent i = new Intent(this, ResultActivity.class);
-            i.putExtra("QUESTION", question_num);
-            i.putExtra("CORRECT", correct_num);
-            startActivity(i);
-            // そのままにしておくと画面が積み重なっていくので終了させる
             finish();
             return;
         }
         // TODO [04] ここから
-        status.setText(String.valueOf(current) + "問中"
-                + String.valueOf(correct_num) + "問正解"
-                + "残り" + String.valueOf(question_num - current) + "問");
+//        status.setText(String.valueOf(current) + "問中"
+//                + String.valueOf(correct_num) + "問正解"
+//                + "残り" + String.valueOf(question_num - current) + "問");
 
         current_question = question_list.get(current);
 

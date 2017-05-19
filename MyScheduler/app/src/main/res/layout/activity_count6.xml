@@ -50,7 +50,7 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorButtonNormal"
+        android:backgroundTint="@color/bootstrap_brand_warning"
         android:onClick="back"
         android:text="戻る" />
 

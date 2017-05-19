@@ -199,16 +199,16 @@ public class Count6Activity extends AppCompatActivity {
                 startActivityForResult(intent, 0);
                 break;
 
-            case R.id.menu_new:
-                try {
-                in = openFileInput("filename01.jpg");
-                mBitmap = BitmapFactory.decodeStream(in);
-                mImageView.setImageBitmap(mBitmap);
-
-                } catch (IOException e) {
-                e.printStackTrace();
-                }
-                break;
+//            case R.id.menu_new:
+//                try {
+//                in = openFileInput("filename01.jpg");
+//                mBitmap = BitmapFactory.decodeStream(in);
+//                mImageView.setImageBitmap(mBitmap);
+//
+//                } catch (IOException e) {
+//                e.printStackTrace();
+//                }
+//                break;
 
         }
         return super.onOptionsItemSelected(item);
