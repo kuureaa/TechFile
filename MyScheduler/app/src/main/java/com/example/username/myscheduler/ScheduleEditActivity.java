@@ -73,15 +73,6 @@ public class ScheduleEditActivity extends AppCompatActivity {
 
             final RealmResults<Schedule> results = mRealm.where(Schedule.class)
                     .equalTo("id", scheduleId).findAll();
-//            mRealm.executeTransaction(new Realm.Transaction() {
-//                @Override
-//                public void execute(Realm realm) {
-//                    Schedule schedule = results.first();
-//                    schedule.setDate(date);
-//                    schedule.setTitle(mTitleEdit.getText().toString());
-//                    schedule.setDetail(selected);
-//                }
-//            });
 
             mAlertBuilder1.setTitle("内容を変更しますか？");
             mAlertBuilder1.setNegativeButton("はい",
@@ -92,8 +83,9 @@ public class ScheduleEditActivity extends AppCompatActivity {
                                 public void execute(Realm realm) {
                                     Schedule schedule = results.first();
                                     schedule.setDate(date);
-                                    schedule.setTitle(mTitleEdit.getText().toString() + "\n\n\n" + "対策：" + "\n\n" + mDetailEdit.getText().toString() + "\n");
-                                    schedule.setDetail(selected);
+                                    schedule.setTitle(mTitleEdit.getText().toString());
+                                    schedule.setDetail(mDetailEdit.getText().toString());
+                                    schedule.setPoint(selected);
                                 }
                             });
 
@@ -109,18 +101,7 @@ public class ScheduleEditActivity extends AppCompatActivity {
                         }
                     });
             mAlertBuilder1.show();
-            //startActivity(new Intent(ScheduleEditActivity.this,MainActivity.class));
 
-//            Snackbar.make(findViewById(android.R.id.content),
-//                    "アップデートしました", Snackbar.LENGTH_LONG)
-//                    .setAction("戻る", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            finish();
-//                        }
-//                    })
-//                    .setActionTextColor(Color.YELLOW)
-//                    .show();
         } else {
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -131,8 +112,9 @@ public class ScheduleEditActivity extends AppCompatActivity {
                     Schedule schedule
                             = realm.createObject(Schedule.class, new Long(nextId));
                     schedule.setDate(date);
-                    schedule.setTitle(mTitleEdit.getText().toString() + "\n\n\n" + "対策：" + "\n\n" + mDetailEdit.getText().toString() + "\n");
-                    schedule.setDetail(selected);
+                    schedule.setTitle(mTitleEdit.getText().toString());
+                    schedule.setDetail(mDetailEdit.getText().toString());
+                    schedule.setPoint(selected);
 
                     //追記
                     startActivity(new Intent(ScheduleEditActivity.this,
@@ -177,15 +159,6 @@ public class ScheduleEditActivity extends AppCompatActivity {
                     });
             mAlertBuilder.show();
 
-//            mRealm.executeTransaction(new Realm.Transaction() {
-//                @Override
-//                public void execute(Realm realm) {
-//                    Schedule schedule = realm.where(Schedule.class)
-//                            .equalTo("id", scheduleId).findFirst();
-//                    schedule.deleteFromRealm();
-//                }
-//            });
-//            Toast.makeText(this, "削除しました", Toast.LENGTH_SHORT).show();
         }
     }
 

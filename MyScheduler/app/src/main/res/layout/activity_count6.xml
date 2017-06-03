@@ -27,7 +27,7 @@
             android:layout_marginLeft="267dp"
             android:backgroundTint="@color/deleteButton"
             android:text="6"
-            android:textColor="@color/deleteButton"
+            android:textColor="?attr/colorPrimary"
             android:textSize="120sp"
             tools:text="6" />
 
@@ -39,7 +39,7 @@
             android:layout_marginLeft="100dp"
             android:clickable="true"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/deleteButton"
+            app:backgroundTint="@color/colorPrimary"
             app:elevation="0dp"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_play_arrow_black_24dp" />

@@ -51,8 +51,8 @@ public class ScheduleAdapter extends RealmBaseAdapter<Schedule> {
 
         String txtStr = "<font color=#ff0000>アンガーポイント：</font>";
 
-        viewHolder.ap.setText("\n" + "怒りの原因・状況："+ "\n\n" + schedule.getTitle()+ "\n\n" + Html.fromHtml(txtStr) + schedule.getDetail() + "p" + "\n\n" + formatDate);
-       // viewHolder.ap.setText("アンガーポイント：" + schedule.getDetail() + "p" + "\n\n");
+        viewHolder.ap.setText(
+                "\n" + "怒りの原因・状況："+ "\n\n" + schedule.getTitle()+ "\n\n\n" + "対策：" + "\n\n" + schedule.getDetail() + "\n\n\n" + Html.fromHtml(txtStr) + schedule.getPoint() + "p" + "\n\n" + formatDate);
         return convertView;
     }
 }

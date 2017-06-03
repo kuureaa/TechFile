@@ -64,7 +64,7 @@ public class Count6Activity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
-            mAlertBuilder1.setTitle("よく頑張りました！！");
+            mAlertBuilder1.setTitle("すっごーい！");
             mAlertBuilder1.setNegativeButton("閉じる",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -98,7 +98,7 @@ public class Count6Activity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                mAlertBuilder.setTitle("６秒間だけ我慢して！！");
+                mAlertBuilder.setTitle("６秒間だけ我慢して！");
                 mAlertBuilder.setNegativeButton("OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

@@ -107,7 +107,7 @@ public class ChartActivity extends AppCompatActivity {
 
 
                     xValues.add(formatDate);
-                    valuesA.add(new Entry(Integer.parseInt(s1.getDetail()),i));
+                    valuesA.add(new Entry(Integer.parseInt(s1.getPoint()),i));
                     i++;
                 }
 

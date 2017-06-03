@@ -1,5 +1,7 @@
 package com.example.username.myscheduler;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +18,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class QuizActivity extends ActionBarActivity {
+
+    AlertDialog.Builder mAlertBuilder;
+
     // 問題を管理するリスト
     private ArrayList<Question> question_list = new ArrayList<>();
     // 描画更新用Handler
@@ -67,24 +72,24 @@ public class QuizActivity extends ActionBarActivity {
 
         makeQuestions();
         startQuestion();
+
+        mAlertBuilder = new AlertDialog.Builder(this);
         // TODO [02] ここまで
     }
 
     // 問題を作成する
     private void makeQuestions() {
         // TODO [03] ここから
-        Question q1 = new Question(R.drawable.japan, "日本の首都は？", "東京", "京都", "大阪");
-        Question q2 = new Question(R.drawable.japan, "一番大きいは都道府県は？", "北海道", "長野", "岡山");
-        Question q3 = new Question(R.drawable.sekaitizu, "世界で五番目に面積の大きな国は？", "ブラジル", "オーストラリア", "中国");
-        Question q4 = new Question(R.drawable.hashibirogorou, "この動物の名前は？", "ハシビロゴロウ", "トキ", "サーバルキャット");
-        Question q5 = new Question(R.drawable.japan, "最南端の島がある都道府県は？", "東京", "沖縄", "鹿児島");
-        Question q6 = new Question(R.drawable.fujisann, "この山の名前は？", "富士山", "阿蘇山", "高尾山");
+        Question q1 = new Question(R.drawable.n2, "憤懣の意味は？", "怒りが発散できない状態", "すぐにおさまる怒り", "機嫌がわるくなって泣いたり拗ねたりする");
+        Question q2 = new Question(R.drawable.n2, "余憤の意味は？", "完全に消えず残っている怒り", "癇癪を起こして怒る", "他人の過ちをしかって非難する");
+        Question q3 = new Question(R.drawable.n2, "義憤の意味は？", "人のルールから外れたこと、不公正な事柄に対する怒り", "とにかく腹立たしくてどうしようもない様", "不快で腹が立つ");
+        Question q4 = new Question(R.drawable.n2, "息巻くの意味は？", "呼吸を激しくして怒る", "機嫌が悪いこと", "納得できず不満に思うこと");
+
         question_list.add(q1);
         question_list.add(q2);
         question_list.add(q3);
         question_list.add(q4);
-        question_list.add(q5);
-        question_list.add(q6);
+
         // TODO [03] ここまで
     }
 
@@ -129,6 +134,23 @@ public class QuizActivity extends ActionBarActivity {
 
         if (buttonText.equals(current_question.answer)) {
             correct_num = correct_num + 1;
+            mAlertBuilder.setTitle("せいかい！");
+            mAlertBuilder.setNegativeButton("閉じる",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            mAlertBuilder.show();
+        } else{
+            mAlertBuilder.setTitle("ちがうよ！");
+            mAlertBuilder.setNegativeButton("閉じる",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            mAlertBuilder.show();
         }
 
         nextQuestion();

@@ -15,6 +15,7 @@ public class Schedule extends RealmObject {
     private Date date;
     private String title;
     private String detail;
+    private String point;
 
     public long getId() {
         return id;
@@ -46,6 +47,14 @@ public class Schedule extends RealmObject {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
     }
 
 
